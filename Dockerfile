@@ -17,7 +17,7 @@ ENV NODE_ENV=test
 
 RUN yarn lint && yarn test
 
-RUN yarn build
+RUN yarn build-all
 
 # --------------- Clean stage
 FROM dev as clean
