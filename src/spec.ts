@@ -9,7 +9,7 @@ describe('Test suite', () => {
 
   it('should return file list', function (done) {
     // request(app)
-    //   .get('/users')
+    //   .get('/files')
     //   .expect(200)
     //   .end(function (err, res) {
     //     expect(res.body).toEqual({})

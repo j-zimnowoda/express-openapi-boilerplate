@@ -1,23 +1,30 @@
 openapi: 3.0.0
 info:
   title: express-openapi sample project
-  version: '3.0.0'
+  version: '3.0.1'
 paths:
-  /users:
+  /files:
     get:
-      description: Get users
-      operationId: getUsers
+      description: Get files
+      operationId: getFiles
       responses:
         200:
-          description: An echo of the request body.
+          description: Fetch file list from S3 bucket
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  age:
-                    type: integer
-                  isCool:
-                    type: boolean
+                type: array
+                items:
+                  properties:
+                    Key:
+                      type: string
+                    LastModified:
+                      type: string
+                    ETag:
+                      type: string
+                    Size:
+                      type: string
+                    StorageClass:
+                      type: string
+        500:
+          description: Unable to fetch file list from S3 bucket
