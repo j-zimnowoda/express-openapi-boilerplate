@@ -5,16 +5,18 @@ import { json } from 'body-parser'
 import path from 'path'
 import cors from 'cors'
 import { createLightship } from 'lightship'
-
-import { cleanEnv, str, port } from 'envalid'
 import { Server } from 'http'
 import { Application } from 'express-serve-static-core'
-const env = cleanEnv(process.env, {
-  HEALTH_CHECK_PORT: port({ default: 9000 }),
-  PORT: port({ default: 8080 }),
-  NODE_ENV: str({ choices: ['development', 'test', 'production', 'staging'] }),
-})
-export function initApp(): Application {
+import { S3, config } from 'aws-sdk'
+import env from './env'
+
+function initAwsClient(): S3 {
+  const client = new S3({ apiVersion: '2006-03-01' })
+  config.update({ region: env.AWS_DEFAULT_REGION })
+  return client
+}
+
+export function initApp(s3Client: S3): Application {
   const app = express()
   const apiRoutesPath = path.resolve(__dirname, 'api-routes')
   app.use(cors())
@@ -23,6 +25,9 @@ export function initApp(): Application {
   initialize({
     apiDoc: readFileSync(path.resolve(__dirname, 'api-doc.yml'), 'utf8'),
     app: app,
+    dependencies: {
+      s3Client,
+    },
     enableObjectCoercion: true,
     paths: apiRoutesPath,
     routesGlob: '**/*.{ts,js}',
@@ -49,6 +54,7 @@ export async function startServer(app: Application): Promise<Server> {
 }
 
 if (typeof require !== 'undefined' && require.main === module) {
-  const app = initApp()
+  const awsClient = initAwsClient()
+  const app = initApp(awsClient)
   startServer(app)
 }
