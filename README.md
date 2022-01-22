@@ -1,9 +1,7 @@
 # Typescript Express OpenApi boilerplate
 
-Implements sample application REST application that fetches file list from S3 bucket.
-```
-curl http://127.0.0.1:8080/files
-```
+Implements simple REST application that fetches file list from S3 bucket.
+
 ## Project highlights
 
 ```
@@ -24,6 +22,7 @@ curl http://127.0.0.1:8080/files
 ```
 yarn install
 yarn dev:watch
+curl http://127.0.0.1:8080/files
 ```
 
 Learn more about other existing commands by running `yarn run`
