@@ -75,7 +75,8 @@ autoscaling:
 secrets:
   AWS_ACCESS_KEY_ID: ''
   AWS_SECRET_ACCESS_KEY: ''
-  AWS_DEFAULT_REGION: ''
+  AWS_DEFAULT_REGION: 'eu-central-1'
+  AWS_S3_BUCKET: 'express-openapi-boilerplate'
 
 nodeSelector: {}
 
